@@ -1,0 +1,4 @@
+name: 'NESEA realname'
+type: module
+description: 'Modifies realname to use CiviCRM display name if available.'
+core_version_requirement: ^8 || ^9 || ^10
