@@ -1,5 +1,16 @@
 <?php
 
 function nesea_realname_realname_alter(&$realname, $account) {
-
+  $user = \Drupal::routeMatch()->getParameter('user');
+  $uid = $user->id();
+  \Drupal::service('civicrm')->initialize();
+  $contacts = \Civi\Api4\Contact::get(FALSE)
+    ->addSelect('display_name')
+    ->addJoin('UFMatch AS uf_match', 'LEFT')
+    ->addWhere('uf_match.uf_id', '=', $uid)
+    ->setLimit(1)
+    ->execute();
+  foreach ($contacts as $contact) {
+    $realname = $contact['display_name'];
+  }
 }
